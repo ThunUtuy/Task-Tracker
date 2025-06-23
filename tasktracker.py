@@ -6,9 +6,12 @@ import os
 parser = argparse.ArgumentParser(prog = 'task-cli')
 subparsers = parser.add_subparsers(dest ="action", required = True)
 
-# Adding a new task
+# Adding Actions
 add_parser =  subparsers.add_parser("add")
 add_parser.add_argument("destination")
+
+list_parser =  subparsers.add_parser("list")
+list_parser.add_argument("status", nargs="?", choices=["todo", "in-progress", "done"])
 
 args = parser.parse_args()
 dateTime = str(datetime.datetime.now())
@@ -25,7 +28,6 @@ if args.action == "add":
         id = 1
     else:
          id = max(task["id"] for task in tasks) + 1
-         print(id)
 
     data = {
         "id" : id,
@@ -40,6 +42,20 @@ if args.action == "add":
     with open('task.json', 'w') as json_file:
         json.dump(tasks, json_file, indent = 4)
         print(f"Task added successfully (ID: {id})")
+
+# Listing all tasks
+# Listing tasks by status
+elif args.action == "list":
+    if len(tasks) <= 0:
+        print("No data found")
+    else:
+         if args.status :
+              for task in tasks:
+                if task["status"] ==args.status:
+                    print(task["description"])
+         else:
+            for task in tasks:
+                print(task["description"])
 
 
 # Adding a new task
