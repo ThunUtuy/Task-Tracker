@@ -2,6 +2,8 @@
 ## What is this project
 This project is a task tracker with basic functionalities (listed in the next section). You use CLI (command line interface to interact with the program). This project idea is from roadmap.sh.
 ## Functionalities
+replace task-cli with python tasktracker.py
+
 - Adding a new task
   - task-cli add "Buy groceries"
   - Output: Task added successfully (ID: 1)
