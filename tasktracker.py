@@ -13,6 +13,13 @@ add_parser.add_argument("destination")
 list_parser =  subparsers.add_parser("list")
 list_parser.add_argument("status", nargs="?", choices=["todo", "in-progress", "done"])
 
+delete_parser = subparsers.add_parser("delete")
+delete_parser.add_argument("delete_id")
+
+update_parser = subparsers.add_parser("update")
+update_parser.add_argument("update_id", type=int)
+update_parser.add_argument("message")
+
 args = parser.parse_args()
 dateTime = str(datetime.datetime.now())
 
@@ -52,10 +59,25 @@ elif args.action == "list":
          if args.status :
               for task in tasks:
                 if task["status"] ==args.status:
-                    print(task["description"])
+                    print(task["id"],task["description"])
          else:
             for task in tasks:
-                print(task["description"])
+                print(task["id"], task["description"])
+
+# Updating and deleting tasks
+elif args.action == "update":
+    flag = False
+    for task in tasks:
+        if task["id"] == args.update_id:
+            task["description"] = args.message
+            with open('task.json', 'w') as json_file:
+                json.dump(tasks, json_file, indent = 4)
+                print(f"Task updated successfully (ID: {args.update_id})")
+            flag = True
+            break
+    if flag == False:
+        print("id not found")
+
 
 
 # Adding a new task
