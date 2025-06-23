@@ -20,6 +20,12 @@ update_parser = subparsers.add_parser("update")
 update_parser.add_argument("update_id", type=int)
 update_parser.add_argument("message")
 
+markinprogress_parser = subparsers.add_parser("mark-in-progress")
+markinprogress_parser.add_argument("mark_id", type=int)
+
+markdone_parser = subparsers.add_parser("mark-done")
+markdone_parser.add_argument("mark_id", type=int)
+
 args = parser.parse_args()
 dateTime = str(datetime.datetime.now())
 
@@ -62,7 +68,8 @@ elif args.action == "list":
                     print(task["id"],task["description"])
          else:
             for task in tasks:
-                print(task["id"], task["description"])
+                s = task["status"]
+                print(task["id"], task["description"], s.upper())
 
 # Updating and deleting tasks
 elif args.action == "update":
@@ -91,7 +98,32 @@ elif args.action == "delete":
     if flag == False:
         print("id not found")
 
+# Marking a task as in progress or done
+elif args.action == "mark-in-progress":
+    flag = False
+    for task in tasks:
+        if task["id"] == args.mark_id:
+            task["status"] = "in-progress"
+            with open('task.json', 'w') as json_file:
+                json.dump(tasks, json_file, indent = 4)
+                print(f"Task mark-in-progress successfully (ID: {args.mark_id})")
+            flag = True
+            break
+    if flag == False:
+        print("id not found")
 
+elif args.action == "mark-done":
+    flag = False
+    for task in tasks:
+        if task["id"] == args.mark_id:
+            task["status"] = "done"
+            with open('task.json', 'w') as json_file:
+                json.dump(tasks, json_file, indent = 4)
+                print(f"Task mark-done successfully (ID: {args.mark_id})")
+            flag = True
+            break
+    if flag == False:
+        print("id not found")
 
 
 # Adding a new task
