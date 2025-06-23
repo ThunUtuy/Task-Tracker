@@ -77,6 +77,7 @@ elif args.action == "update":
     for task in tasks:
         if task["id"] == args.update_id:
             task["description"] = args.message
+            task["updatedAt"] = dateTime
             with open('task.json', 'w') as json_file:
                 json.dump(tasks, json_file, indent = 4)
                 print(f"Task updated successfully (ID: {args.update_id})")
@@ -105,6 +106,7 @@ elif args.action == "mark-in-progress":
     for task in tasks:
         if task["id"] == args.mark_id:
             task["status"] = "in-progress"
+            task["updatedAt"] = dateTime
             with open('task.json', 'w') as json_file:
                 json.dump(tasks, json_file, indent = 4)
                 print(f"Task mark-in-progress successfully (ID: {args.mark_id})")
@@ -119,6 +121,7 @@ elif args.action == "mark-done":
     for task in tasks:
         if task["id"] == args.mark_id:
             task["status"] = "done"
+            task["updatedAt"] = dateTime
             with open('task.json', 'w') as json_file:
                 json.dump(tasks, json_file, indent = 4)
                 print(f"Task mark-done successfully (ID: {args.mark_id})")
@@ -126,25 +129,4 @@ elif args.action == "mark-done":
             break
     if flag == False:
         print("id not found")
-
-
-# Adding a new task
-#task-cli add "Buy groceries"
-# Output: Task added successfully (ID: 1)
-
-# Updating and deleting tasks
-#task-cli update 1 "Buy groceries and cook dinner"
-#task-cli delete 1
-
-# Marking a task as in progress or done
-#task-cli mark-in-progress 1
-#task-cli mark-done 1
-
-# Listing all tasks
-#task-cli list
-
-# Listing tasks by status
-#task-cli list done
-#task-cli list todo
-#task-cli list in-progress
 
