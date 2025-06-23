@@ -1,6 +1,6 @@
 # Task-Tracker
 ## What is this project
-This project is a task tracker with basic functionalities (listed in the next section). You use CLI (command line interface to interact with the program). This project idea is from roadmap.sh.
+This project is a task tracker with basic functionalities (listed in the next section). You use CLI (command line interface to interact with the program). This project idea is from [roadmap.sh](https://roadmap.sh/projects/task-tracker).
 ## Functionalities
 replace task-cli with python tasktracker.py
 
