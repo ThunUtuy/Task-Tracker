@@ -71,7 +71,7 @@ elif args.action == "list":
                 s = task["status"]
                 print(task["id"], task["description"], s.upper())
 
-# Updating and deleting tasks
+# Updating
 elif args.action == "update":
     flag = False
     for task in tasks:
@@ -85,6 +85,7 @@ elif args.action == "update":
     if flag == False:
         print("id not found")
 
+# Deleting
 elif args.action == "delete":
     flag = False
     for task in tasks:
@@ -98,7 +99,7 @@ elif args.action == "delete":
     if flag == False:
         print("id not found")
 
-# Marking a task as in progress or done
+# Marking a task as in progress
 elif args.action == "mark-in-progress":
     flag = False
     for task in tasks:
@@ -112,6 +113,7 @@ elif args.action == "mark-in-progress":
     if flag == False:
         print("id not found")
 
+# Marking a task as done
 elif args.action == "mark-done":
     flag = False
     for task in tasks:
