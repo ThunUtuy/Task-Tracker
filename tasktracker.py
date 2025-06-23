@@ -14,7 +14,7 @@ list_parser =  subparsers.add_parser("list")
 list_parser.add_argument("status", nargs="?", choices=["todo", "in-progress", "done"])
 
 delete_parser = subparsers.add_parser("delete")
-delete_parser.add_argument("delete_id")
+delete_parser.add_argument("delete_id", type=int)
 
 update_parser = subparsers.add_parser("update")
 update_parser.add_argument("update_id", type=int)
@@ -77,6 +77,20 @@ elif args.action == "update":
             break
     if flag == False:
         print("id not found")
+
+elif args.action == "delete":
+    flag = False
+    for task in tasks:
+        if task["id"] == args.delete_id:
+            tasks.remove(task)
+            with open('task.json', 'w') as json_file:
+                json.dump(tasks, json_file, indent = 4)
+                print(f"Task deleted successfully (ID: {args.delete_id})")
+            flag = True
+            break
+    if flag == False:
+        print("id not found")
+
 
 
 
