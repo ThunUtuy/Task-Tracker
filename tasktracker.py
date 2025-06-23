@@ -1,4 +1,7 @@
 import argparse
+import json
+import datetime
+import os
 
 parser = argparse.ArgumentParser(prog = 'task-cli')
 subparsers = parser.add_subparsers(dest ="action", required = True)
@@ -7,8 +10,37 @@ subparsers = parser.add_subparsers(dest ="action", required = True)
 add_parser =  subparsers.add_parser("add")
 add_parser.add_argument("destination")
 
-
 args = parser.parse_args()
+dateTime = str(datetime.datetime.now())
+
+if os.path.exists("task.json") and os.path.getsize("task.json") > 0:
+    with open('task.json', 'r') as json_file:
+            tasks = json.load(json_file)
+else:
+     tasks = []
+
+# Adding a new task
+if args.action == "add":
+    if len(tasks) <= 0:
+        id = 1
+    else:
+         id = max(task["id"] for task in tasks) + 1
+         print(id)
+
+    data = {
+        "id" : id,
+        "description" : args.destination,
+        "status" : "todo",
+        "createdAt" : dateTime,
+        "updatedAt" : dateTime
+    }
+
+    tasks.append(data)
+
+    with open('task.json', 'w') as json_file:
+        json.dump(tasks, json_file, indent = 4)
+        print(f"Task added successfully (ID: {id})")
+
 
 # Adding a new task
 #task-cli add "Buy groceries"
